@@ -1,0 +1,319 @@
+/* Estilos Generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+main {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Página 1: Inicio --- */
+.inicio-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.inicio-container {
+    text-align: center;
+}
+
+.caratula-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.btn-empezar {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-empezar:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* --- Página 2: Votación --- */
+.votacion-container h1 {
+    text-align: center;
+    color: #007bff;
+}
+
+.votacion-container p {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #666;
+}
+
+.categoria {
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.categoria h2 {
+    margin-top: 0;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.participantes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.participantes-grid label {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border: 1px solid #e9ecef;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.participantes-grid label:hover {
+    background-color: #e9ecef;
+}
+
+.participantes-grid input[type="checkbox"] {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.participantes-grid span {
+    font-size: 1rem;
+}
+
+.btn-votar {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-votar:hover {
+    background-color: #218838;
+}
+
+.btn-votar:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.mensaje-votado {
+    text-align: center;
+    padding: 2rem;
+    background-color: #e8f5e9;
+    border-left: 5px solid #4caf50;
+    color: #2e7d32;
+    border-radius: 5px;
+}
+
+.oculto {
+    display: none;
+}
+
+/* (COPIA Y PEGA ESTO AL FINAL DE TU ARCHIVO styles.css EXISTENTE) */
+
+/* --- Página 3: Resultados --- */
+.resultados-body {
+    /* PARA CAMBIAR EL FONDO, CAMBIA LA URL AQUÍ */
+    background-image: url('URL_DE_OTRA_IMAGEN_DE_FONDO.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.resultados-container h1 {
+    text-align: center;
+    color: #333;
+}
+
+.resultados-container p {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #555;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+.resultado-categoria {
+    margin-bottom: 2.5rem;
+}
+
+.resultado-categoria h2 {
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 0.5rem;
+}
+
+.resultado-item {
+    margin-bottom: 1rem;
+}
+
+.resultado-item .info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.barra-progreso {
+    width: 100%;
+    height: 30px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+}
+
+.barra-progreso .relleno {
+    height: 100%;
+    width: 0%; /* Se modifica con JS */
+    background-color: #28a745;
+    transition: width 0.5s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.btn-volver, .btn-ver-resultados {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.btn-volver:hover, .btn-ver-resultados:hover {
+    background-color: #5a6268;
+}
+
+.mensaje-sin-votos {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+/* (Añadir esto al final de styles.css) */
+
+.btn-reiniciar {
+    display: none; /* AÑADE ESTA LÍNEA PARA OCULTARLO POR DEFECTO */
+    width: 100%;
+    margin-top: 1rem;
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.btn-reiniciar:hover {
+    background-color: #c82333;
+}
+
+/* =================================
+   REGLAS PARA DISEÑO RESPONSIVE
+   ================================= */
+
+/* Para pantallas de 768px de ancho o menos (tablets y móviles) */
+@media (max-width: 768px) {
+
+    /* Reducimos el padding y margen general para aprovechar el espacio */
+    main {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    /* Ajustamos el tamaño de los títulos */
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .categoria h2 {
+        font-size: 1.3rem;
+    }
+
+    /* Hacemos la cuadrícula de participantes un poco más compacta */
+    .participantes-grid {
+        grid-template-columns: 1fr; /* Forzamos una sola columna para mejor lectura */
+        gap: 0.8rem;
+    }
+
+    /* Ajustamos el padding de los botones principales */
+    .btn-empezar, .btn-votar {
+        padding: 12px 24px;
+        font-size: 1.1rem;
+    }
+}
+
+
+/* Para pantallas muy pequeñas de 480px o menos (móviles) */
+@media (max-width: 480px) {
+    main {
+        padding: 1rem;
+        margin: 0.5rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .categoria h2 {
+        font-size: 1.2rem;
+    }
+
+    .participantes-grid label {
+        padding: 0.8rem;
+    }
+}

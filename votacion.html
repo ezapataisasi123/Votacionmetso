@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votación</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="votacion-body">
+
+    <main class="votacion-container">
+        <h1>Elige a tus ganadores</h1>
+        <p>Selecciona una opción por cada categoría. Solo puedes votar una vez.</p>
+        
+        <form id="votingForm">
+            <section class="categoria" id="individual">
+                <h2>Categoría Individual</h2>
+                <div class="participantes-grid">
+                    <label>
+                        <input type="checkbox" name="individual" value="Participante 1">
+                        <span>Julio Luján</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="individual" value="Participante 2">
+                        <span>Juan Jara</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="individual" value="Participante 3">
+                        <span>Elias Reyes</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="individual" value="Participante 3">
+                        <span>Jesús Ventocilla</span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="categoria" id="duos">
+                <h2>Categoría Dúos</h2>
+                <div class="participantes-grid">
+                    <label>
+                        <input type="checkbox" name="duos" value="Dúo A">
+                        <span>Duo Musical</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="duos" value="Dúo B">
+                        <span>Dukumbia</span>
+                    </label>
+                     <label>
+                        <input type="checkbox" name="duos" value="Dúo B">
+                        <span>Marinera</span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="categoria" id="grupal">
+                <h2>Categoría Grupal</h2>
+                <div class="participantes-grid">
+                    <label>
+                        <input type="checkbox" name="grupal" value="Grupo X">
+                        <span>Banda: Los Sugars</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="grupal" value="Grupo Y">
+                        <span>Wayra Runakuna</span>
+                    </label>
+                </div>
+            </section>
+
+            <button type="submit" id="submitVote" class="btn-votar">Enviar Voto</button>
+        </form>
+
+         <div id="mensajeVotado" class="mensaje-votado oculto">
+            <h2>¡Gracias por tu voto! ✅</h2>
+            <p>Tu voto ha sido registrado. Ya no puedes volver a votar.</p>
+            <a href="resultados.html" class="btn-ver-resultados">Ver Resultados en Vivo</a>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
