@@ -2,36 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-1.0">
     <title>Resultados de la Votación</title>
     <link rel="stylesheet" href="styles.css">
     
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
-
-        // Tu configuración de Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyDdRM-0ZAK0-u0RJpSem1xTg8xGiHh3Hv8",
-            authDomain: "votacionmetso.firebaseapp.com",
-            projectId: "votacionmetso",
-            storageBucket: "votacionmetso.firebasestorage.app",
-            messagingSenderId: "624381957218",
-            appId: "1:624381957218:web:1a594ca0071dd46366ed3b",
-            measurementId: "G-TLQ2WKJF8C"
-        };
-
-        // Inicializa Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const analytics = getAnalytics(app);
-
-        // Haz que 'app' y 'db' sean accesibles globalmente para otros módulos
-        window.firebaseApp = app;
-        window.firebaseDb = db;
-    </script>
-</head>
+    </head>
 <body class="resultados-body">
 
     <main class="resultados-container">

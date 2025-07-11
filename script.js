@@ -1,16 +1,24 @@
 // script.js
-document.addEventListener('DOMContentLoaded', () => {
-    // Ya no necesitas firebaseConfig ni inicializar Firebase aquí
-    // Las variables 'app' y 'db' vienen de window
-    const app = window.firebaseApp;
-    const db = window.firebaseDb; 
+// Importa las funciones necesarias del SDK de Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { getFirestore, collection, doc, runTransaction } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+// No importamos getAnalytics si no lo usas en este archivo
 
-    // Asegúrate de que 'db' esté disponible antes de usarlo
-    if (!db) {
-        console.error("Firebase Firestore no está inicializado. Asegúrate de que los scripts de Firebase se carguen primero en HTML.");
-        alert("Error de configuración: No se pudo conectar con la base de datos.");
-        return; // Detener la ejecución si Firebase no está listo
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    // TU CONFIGURACIÓN DE FIREBASE (PEGA AQUÍ EL OBJETO firebaseConfig)
+    const firebaseConfig = {
+        apiKey: "AIzaSyDdRM-0ZAK0-u0RJpSem1xTg8xGiHh3Hv8",
+        authDomain: "votacionmetso.firebaseapp.com",
+        projectId: "votacionmetso",
+        storageBucket: "votacionmetso.firebasestorage.app",
+        messagingSenderId: "624381957218",
+        appId: "1:624381957218:web:1a594ca0071dd46366ed3b",
+        measurementId: "G-TLQ2WKJF8C" // Puedes omitir measurementId si no usas Analytics aquí
+    };
+
+    // Inicializa Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app); // Obtén una instancia de Firestore
 
     const votingForm = document.getElementById('votingForm');
     const mensajeVotado = document.getElementById('mensajeVotado');
@@ -56,14 +64,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 const participante = seleccion.value;
                 const docId = `${categoria}-${participante}`;
 
-                const votoRef = db.collection('votos').doc(docId);
+                // Usa las funciones importadas: doc y collection
+                const votoRef = doc(collection(db, 'votos'), docId); 
 
-                await db.runTransaction(async (transaction) => {
-                    const doc = await transaction.get(votoRef);
-                    if (!doc.exists) {
+                // Usa la función importada: runTransaction
+                await runTransaction(db, async (transaction) => { // runTransaction ahora recibe 'db' como primer argumento
+                    const currentDoc = await transaction.get(votoRef);
+                    if (!currentDoc.exists()) { // Usar .exists() para verificar si el documento existe
                         transaction.set(votoRef, { count: 1 });
                     } else {
-                        const newCount = doc.data().count + 1;
+                        const newCount = currentDoc.data().count + 1;
                         transaction.update(votoRef, { count: newCount });
                     }
                 });

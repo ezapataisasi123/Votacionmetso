@@ -1,15 +1,24 @@
 // resultados.js
-document.addEventListener('DOMContentLoaded', () => {
-    // Ya no necesitas firebaseConfig ni inicializar Firebase aquí
-    // Las variables 'app' y 'db' vienen de window
-    const app = window.firebaseApp;
-    const db = window.firebaseDb; 
+// Importa las funciones necesarias del SDK de Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { getFirestore, collection, getDocs, deleteDoc, doc, onSnapshot, writeBatch } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+// No importamos getAnalytics si no lo usas en este archivo
 
-    // Asegúrate de que 'db' esté disponible antes de usarlo
-    if (!db) {
-        console.error("Firebase Firestore no está inicializado. Asegúrate de que los scripts de Firebase se carguen primero en HTML.");
-        return; // Detener la ejecución si Firebase no está listo
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    // TU CONFIGURACIÓN DE FIREBASE (PEGA AQUÍ EL OBJETO firebaseConfig)
+    const firebaseConfig = {
+        apiKey: "AIzaSyDdRM-0ZAK0-u0RJpSem1xTg8xGiHh3Hv8",
+        authDomain: "votacionmetso.firebaseapp.com",
+        projectId: "votacionmetso",
+        storageBucket: "votacionmetso.firebasestorage.app",
+        messagingSenderId: "624381957218",
+        appId: "1:624381957218:web:1a594ca0071dd46366ed3b",
+        measurementId: "G-TLQ2WKJF8C" // Puedes omitir measurementId si no usas Analytics aquí
+    };
+
+    // Inicializa Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app); // Obtén una instancia de Firestore
 
     const resultadosWrapper = document.getElementById('resultadosWrapper');
     const botonReiniciar = document.getElementById('reiniciarVotos');
@@ -27,17 +36,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (confirmacion) {
                     try {
-                        const votosSnapshot = await db.collection('votos').get();
-                        const batch = db.batch();
-                        votosSnapshot.docs.forEach(doc => {
-                            batch.delete(doc.ref);
+                        // Usa las funciones importadas: collection y getDocs
+                        const votosSnapshot = await getDocs(collection(db, 'votos'));
+                        
+                        // Usa la función importada: writeBatch
+                        const batch = writeBatch(db); // writeBatch ahora recibe 'db'
+
+                        votosSnapshot.docs.forEach(_doc => { // Cambiado 'doc' a '_doc' para evitar conflicto con la importación
+                            batch.delete(_doc.ref);
                         });
                         await batch.commit();
 
                         localStorage.removeItem('hasVoted');
 
                         alert('¡Todas las votaciones han sido reiniciadas!');
-                        location.href = 'resultados.html';
+                        location.href = 'resultados.html?admin=true'; // Mantener el admin tag
                     } catch (error) {
                         console.error("Error al reiniciar votos:", error);
                         alert('Hubo un error al reiniciar los votos. Inténtalo de nuevo. Revisa la consola para más detalles.');
@@ -48,11 +61,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- LÓGICA PARA MOSTRAR RESULTADOS (Con listener en tiempo real de Firebase) ---
-    db.collection('votos').onSnapshot((snapshot) => {
+    // Usa la función importada: onSnapshot y collection
+    onSnapshot(collection(db, 'votos'), (snapshot) => {
         const votos = {};
-        snapshot.forEach(doc => {
-            const data = doc.data();
-            votos[doc.id] = data.count;
+        snapshot.forEach(_doc => { // Cambiado 'doc' a '_doc'
+            const data = _doc.data();
+            votos[_doc.id] = data.count;
         });
         renderizarResultados(votos);
     }, (error) => {
