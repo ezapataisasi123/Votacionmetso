@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados de la Votación</title>
     <link rel="stylesheet" href="styles.css">
-     <script type="module">
-        // Importa las funciones necesarias del SDK (firebase-app y firebase-firestore)
+    
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js"; // ¡IMPORTANTE: Añadir getFirestore!
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
 
         // Tu configuración de Firebase
@@ -24,11 +24,10 @@
 
         // Inicializa Firebase
         const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app); // Obtén la instancia de Firestore
+        const db = getFirestore(app);
         const analytics = getAnalytics(app);
 
-        // ¡IMPORTANTE! Haz que 'db' sea accesible globalmente o pásalo a tus módulos.
-        // Para simplificar, lo añadimos a `window`. Esto es una solución rápida para web estática.
+        // Haz que 'app' y 'db' sean accesibles globalmente para otros módulos
         window.firebaseApp = app;
         window.firebaseDb = db;
     </script>
@@ -47,6 +46,6 @@
         <button id="reiniciarVotos" class="btn-reiniciar">Reiniciar Todas las Votaciones</button>
     </main>
     
-    <script type="module" src="script.js"></script>
+    <script type="module" src="resultados.js"></script>
 </body>
 </html>
