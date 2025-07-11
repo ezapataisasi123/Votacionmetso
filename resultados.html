@@ -5,8 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados de la Votación</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://www.gstatic.com/firebasejs/10.x.x/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.x.x/firebase-firestore-compat.js"></script>
+     <script type="module">
+        // Importa las funciones necesarias del SDK (firebase-app y firebase-firestore)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js"; // ¡IMPORTANTE: Añadir getFirestore!
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
+
+        // Tu configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDdRM-0ZAK0-u0RJpSem1xTg8xGiHh3Hv8",
+            authDomain: "votacionmetso.firebaseapp.com",
+            projectId: "votacionmetso",
+            storageBucket: "votacionmetso.firebasestorage.app",
+            messagingSenderId: "624381957218",
+            appId: "1:624381957218:web:1a594ca0071dd46366ed3b",
+            measurementId: "G-TLQ2WKJF8C"
+        };
+
+        // Inicializa Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app); // Obtén la instancia de Firestore
+        const analytics = getAnalytics(app);
+
+        // ¡IMPORTANTE! Haz que 'db' sea accesible globalmente o pásalo a tus módulos.
+        // Para simplificar, lo añadimos a `window`. Esto es una solución rápida para web estática.
+        window.firebaseApp = app;
+        window.firebaseDb = db;
+    </script>
 </head>
 <body class="resultados-body">
 
@@ -22,6 +47,6 @@
         <button id="reiniciarVotos" class="btn-reiniciar">Reiniciar Todas las Votaciones</button>
     </main>
     
-    <script src="resultados.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>

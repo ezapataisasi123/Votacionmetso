@@ -1,23 +1,20 @@
+// resultados.js
 document.addEventListener('DOMContentLoaded', () => {
-    // TU CONFIGURACIÓN DE FIREBASE (PEGA AQUÍ EL OBJETO firebaseConfig DEL PASO 1)
-    const firebaseConfig = {
-        apiKey: "AIzaSyDdRM-0ZAK0-u0RJpSem1xTg8xGiHh3Hv8",
-        authDomain: "votacionmetso.firebaseapp.com",
-        projectId: "votacionmetso",
-        storageBucket: "votacionmetso.firebasestorage.app",
-        messagingSenderId: "624381957218",
-        appId: "1:624381957218:web:1a594ca0071dd46366ed3b",
-        measurementId: "G-TLQ2WKJF8C",
-    };
+    // Ya no necesitas firebaseConfig ni inicializar Firebase aquí
+    // Las variables 'app' y 'db' vienen de window
+    const app = window.firebaseApp;
+    const db = window.firebaseDb; 
 
-    // Inicializa Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    // Asegúrate de que 'db' esté disponible antes de usarlo
+    if (!db) {
+        console.error("Firebase Firestore no está inicializado. Asegúrate de que los scripts de Firebase se carguen primero en HTML.");
+        return; // Detener la ejecución si Firebase no está listo
+    }
 
     const resultadosWrapper = document.getElementById('resultadosWrapper');
     const botonReiniciar = document.getElementById('reiniciarVotos');
 
-    // --- LÓGICA DE ADMINISTRADOR (Modificada para Firebase) ---
+    // --- LÓGICA DE ADMINISTRADOR ---
     const urlParams = new URLSearchParams(window.location.search);
     const isAdmin = urlParams.get('admin') === 'true';
 
@@ -25,12 +22,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (botonReiniciar) {
             botonReiniciar.style.display = 'block';
 
-            botonReiniciar.addEventListener('click', async () => { // Agrega 'async'
+            botonReiniciar.addEventListener('click', async () => {
                 const confirmacion = confirm('¿Estás seguro de que deseas borrar TODOS los votos? Esta acción no se puede deshacer.');
 
                 if (confirmacion) {
                     try {
-                        // Borrar todos los documentos de la colección 'votos'
                         const votosSnapshot = await db.collection('votos').get();
                         const batch = db.batch();
                         votosSnapshot.docs.forEach(doc => {
@@ -38,14 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                         await batch.commit();
 
-                        // Opcional: Reiniciar también el 'hasVoted' de localStorage para quien reinicia
                         localStorage.removeItem('hasVoted');
 
                         alert('¡Todas las votaciones han sido reiniciadas!');
-                        location.href = 'resultados.html'; // Recargar sin el tag de admin
+                        location.href = 'resultados.html';
                     } catch (error) {
                         console.error("Error al reiniciar votos:", error);
-                        alert('Hubo un error al reiniciar los votos. Inténtalo de nuevo.');
+                        alert('Hubo un error al reiniciar los votos. Inténtalo de nuevo. Revisa la consola para más detalles.');
                     }
                 }
             });
@@ -57,10 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const votos = {};
         snapshot.forEach(doc => {
             const data = doc.data();
-            votos[doc.id] = data.count; // El ID del documento es "categoria-participante"
+            votos[doc.id] = data.count;
         });
-
-        // Re-renderizar los resultados cada vez que hay un cambio en la base de datos
         renderizarResultados(votos);
     }, (error) => {
         console.error("Error al obtener resultados de Firebase:", error);
@@ -68,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function renderizarResultados(votos) {
-        resultadosWrapper.innerHTML = ''; // Limpiar resultados anteriores
+        resultadosWrapper.innerHTML = '';
 
         if (Object.keys(votos).length === 0) {
             resultadosWrapper.innerHTML = '<p class="mensaje-sin-votos">Aún no se han registrado votos.</p>';
@@ -94,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const participantes = votosPorCategoria[categoria];
             const totalVotosCategoria = Object.values(participantes).reduce((sum, count) => sum + count, 0);
 
-            // Convertir participantes a un array para poder ordenarlos por votos
             const participantesOrdenados = Object.entries(participantes).sort(([,a],[,b]) => b - a);
 
             for (const [participante, numVotos] of participantesOrdenados) {
